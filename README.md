@@ -1,15 +1,22 @@
-# danmu
+# Plex 弹幕
 
-To install dependencies:
+网页客户端的弹幕插件，支持 Plex 4.116
 
-```bash
-bun install
-```
+[ViolentMonkey](https://violentmonkey.github.io) 加载 [dist/danmu.user.js](dist/danmu.user.js)
 
-To run:
+## Demo
+![demo](screenshot.png)
 
-```bash
-bun run index.jsx
-```
+## Alternatives
+[lsl330/plex-danmaku](https://github.com/lsl330/plex-danmaku)
 
-This project was created using `bun init` in bun v1.0.25. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+[Mr-Quin/danmaku-anywhere](https://github.com/Mr-Quin/danmaku-anywhere)
+
+## Useful Links
+[AutoBangumi](https://www.autobangumi.org)
+
+[弹弹Play API](https://api.dandanplay.net/swagger/ui/index)
+
+[Plex命名规范](https://support.plex.tv/articles/naming-and-organizing-your-tv-show-files)
+
+[weizhenye/Danmaku](https://github.com/weizhenye/Danmaku)

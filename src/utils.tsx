@@ -1,5 +1,5 @@
-export const toCHS = (num) => {
-  let map = {
+export function toCHS(num: string): string | undefined {
+  const numMap: Record<string, string> = {
     "1": "一",
     "2": "二",
     "3": "三",
@@ -21,13 +21,15 @@ export const toCHS = (num) => {
     "19": "十九",
     "20": "二十",
   };
-  return map[num] || null;
+  return numMap[num];
 }
 
-export const waitForElement = (selector, callback) => {
+export function waitForElement(selector: string, callback: () => void) {
   if (document.querySelector(selector)) {
     callback();
   } else {
-    requestAnimationFrame(() => waitForElement(selector, callback));
+    requestAnimationFrame(() => {
+      waitForElement(selector, callback);
+    });
   }
-};
+}
