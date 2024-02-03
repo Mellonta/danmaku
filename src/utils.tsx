@@ -24,12 +24,32 @@ export function toCHS(num: string): string | undefined {
   return numMap[num];
 }
 
-export function waitForElement(selector: string, callback: () => void) {
-  if (document.querySelector(selector)) {
-    callback();
-  } else {
-    requestAnimationFrame(() => {
-      waitForElement(selector, callback);
-    });
+export function plexTitleToDDP(title: string): [string, string] {
+  const pattern = /^(.+?) - S(\d+) · E(\d+)/;
+  const match = title.match(pattern);
+  let searchTitle: string = title;
+  let searchEpisode = "movie";
+  if (match) {
+    const title = match[1] ?? "";
+    const season = match[2] ?? "";
+    const episode = match[3] ?? "";
+    searchEpisode = episode;
+    if (season === "1") {
+      searchTitle = title;
+    } else {
+      searchTitle = `${title} 第${toCHS(season)}季`;
+    }
+  }
+  return [searchTitle, searchEpisode];
+}
+
+export async function waitEl(selector: string): Promise<HTMLElement> {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+  while (true) {
+    const el = document.querySelector(selector);
+    if (el) {
+      return el as HTMLElement;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 200));
   }
 }

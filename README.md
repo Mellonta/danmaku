@@ -2,10 +2,13 @@
 
 网页客户端的弹幕插件，支持 Plex 4.116
 
-[ViolentMonkey](https://violentmonkey.github.io) 加载 [dist/danmu.user.js](dist/danmu.user.js)
+[ViolentMonkey](https://violentmonkey.github.io) 或者 [TamperMonkey](https://www.tampermonkey.net) 加载 [dist/danmu.user.js](dist/danmu.user.js)
 
 ## Demo
-![demo](screenshot.png)
+![demo](demo/screenshot.png)
+
+### 设置栏
+![menu](demo/menu.png)
 
 ## Alternatives
 [lsl330/plex-danmaku](https://github.com/lsl330/plex-danmaku)

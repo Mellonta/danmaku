@@ -9,20 +9,24 @@ export interface DanmakuComment {
   style?: Partial<CSSStyleDeclaration> | CanvasRenderingContext2D;
 }
 
-function generateCommentElement(comment: DDPComment): DanmakuComment | null {
+function generateCommentElement(
+  comment: DDPComment,
+  fontSize: number,
+  opacity: number,
+): DanmakuComment | null {
   if (comment.p === "") return null;
   const vs = comment.p.split(",");
   const ts = Number(vs[0]);
   const mode = DDPCommentMode[Number(vs[1])];
   if (!mode) return null;
   const color = `000000${Number(vs[2]).toString(16)}`.slice(-6);
-  const fontSize = 25;
   return {
     text: comment.m,
     mode: mode as DanmakuMode,
     time: ts,
     style: {
       fontSize: `${fontSize}px`,
+      opacity: `${opacity / 100}`,
       color: `#${color}`,
       textShadow:
         color === "00000"
@@ -37,8 +41,12 @@ function generateCommentElement(comment: DDPComment): DanmakuComment | null {
   };
 }
 
-export function generateComments(comments: DDPComment[]) {
+export function generateComments(
+  comments: DDPComment[],
+  fontSize: number,
+  opacity: number,
+) {
   return comments
-    .map(generateCommentElement)
+    .map((comment) => generateCommentElement(comment, fontSize, opacity))
     .filter((x): x is DanmakuComment => x !== null);
 }

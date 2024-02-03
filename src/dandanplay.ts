@@ -102,7 +102,7 @@ function DDPComment(episodeId: number, chConvert: DDPChConvert) {
 
 export async function fetchComments(
   episodeId: number,
-  chConvert: DDPChConvert = 0,
+  chConvert: DDPChConvert,
 ) {
   return DDPComment(episodeId, chConvert).then((response) => {
     return response.comments;

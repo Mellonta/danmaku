@@ -1,6 +1,5 @@
 {
   "name": "danmu",
-  "module": "index.ts",
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest",
@@ -17,6 +16,7 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "antd": "^5.14.0",
     "danmaku": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

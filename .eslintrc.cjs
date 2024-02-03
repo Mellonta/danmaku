@@ -8,6 +8,7 @@ module.exports = {
   },
   root: true,
   rules: {
+    "strict": ["error", "global"],
     "@typescript-eslint/no-floating-promises": ["error", { ignoreIIFE: true }],
   }
 };
