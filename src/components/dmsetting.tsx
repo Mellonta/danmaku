@@ -1,5 +1,5 @@
 const BiliSettingSVG = () => {
-  const className = "_1duebfh2e _1duebfhb rkbrtb0 rkbrtb2 rkbrtb9";
+  const className = "rkbrtb0 rkbrtb1 rkbrtb3 rkbrtba";
   return (
     <svg
       className={className}

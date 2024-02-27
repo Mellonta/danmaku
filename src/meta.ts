@@ -6,7 +6,7 @@
 // @include     http://*:32400/web/index.html*
 // @include     https://*:32400/web/index.html*
 // @include     https://app.plex.tv/*
-// @version     0.0.1
+// @version     0.0.2
 // @author      Mellonta
 // @grant       GM_xmlhttpRequest
 // ==/UserScript==
