@@ -19,6 +19,7 @@ function generateCommentElement(
   const ts = Number(vs[0]);
   const mode = DDPCommentMode[Number(vs[1])];
   if (!mode) return null;
+  if (mode === "bottom") return null;
   const color = `000000${Number(vs[2]).toString(16)}`.slice(-6);
   return {
     text: comment.m,
