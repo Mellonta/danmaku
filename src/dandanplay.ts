@@ -1,3 +1,5 @@
+import { generateSignature } from "./utils";
+
 interface DDPSearchEpisodesResponse {
   hasMore: boolean;
   animes?: DDPSearchEpisodesAnime[];
@@ -26,12 +28,25 @@ interface DDPSearchEpisodesEpisode {
   episodeTitle?: string;
 }
 
+const AppId = "<ENTER_APP_ID>";
+const AppSecret = "<ENTER_APP_SECRET>";
+
 function DDPSearchEpisodes(title: string, episode: string) {
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const sig = generateSignature(
+    AppId,
+    timestamp,
+    "/api/v2/search/episodes",
+    AppSecret,
+  );
   return new Promise<DDPSearchEpisodesResponse>((resolve, reject) => {
     GM_xmlhttpRequest({
       url: `https://api.dandanplay.net/api/v2/search/episodes?anime=${title}&episode=${episode}`,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "X-AppId": AppId,
+        "X-Timestamp": timestamp,
+        "X-Signature": sig,
       },
       responseType: "json",
       anonymous: true,
@@ -79,11 +94,21 @@ export enum DDPChConvert {
 }
 
 function DDPComment(episodeId: number, chConvert: DDPChConvert) {
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const sig = generateSignature(
+    AppId,
+    timestamp,
+    "/api/v2/search/episodes",
+    AppSecret,
+  );
   return new Promise<DDPCommentResponse>((resolve, reject) => {
     GM_xmlhttpRequest({
       url: `https://api.dandanplay.net/api/v2/comment/${episodeId}?withRelated=true&chConvert=${chConvert}`,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "X-AppId": AppId,
+        "X-Timestamp": timestamp,
+        "X-Signature": sig,
       },
       responseType: "json",
       anonymous: true,

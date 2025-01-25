@@ -1,3 +1,5 @@
+import CryptoJS from "crypto-js";
+
 export function toCHS(num: string): string | undefined {
   const numMap: Record<string, string> = {
     "1": "一",
@@ -52,4 +54,14 @@ export async function waitEl(selector: string): Promise<HTMLElement> {
     }
     await new Promise((resolve) => setTimeout(resolve, 200));
   }
+}
+
+export function generateSignature(
+  appId: string,
+  timestamp: string,
+  path: string,
+  appSecret: string,
+): string {
+  const data = appId + timestamp + path + appSecret;
+  return CryptoJS.SHA256(data).toString(CryptoJS.enc.Base64);
 }

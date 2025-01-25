@@ -174,3 +174,6 @@ out
 
 # Finder (MacOS) folder config
 .DS_Store
+
+# key
+key.sh
