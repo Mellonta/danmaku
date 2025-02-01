@@ -98,7 +98,7 @@ function DDPComment(episodeId: number, chConvert: DDPChConvert) {
   const sig = generateSignature(
     AppId,
     timestamp,
-    "/api/v2/search/episodes",
+    `/api/v2/comment/${episodeId}`,
     AppSecret,
   );
   return new Promise<DDPCommentResponse>((resolve, reject) => {
