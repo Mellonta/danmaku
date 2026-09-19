@@ -1,9 +1,9 @@
-export interface DMSwitchProps {
-  on: boolean;
-  onClick: () => void;
+interface DanmakuSwitchProps {
+  enabled: boolean;
+  onToggle: () => void;
 }
 
-const BiliSwitchSVG = ({ on }: { on: boolean }) => {
+const DanmakuToggleIcon = ({ on }: { on: boolean }) => {
   const className = "rkbrtb0 rkbrtb1 rkbrtb3 rkbrtba";
   return (
     <svg
@@ -39,19 +39,19 @@ const BiliSwitchSVG = ({ on }: { on: boolean }) => {
   );
 };
 
-const DMSwitch = ({ on, onClick }: DMSwitchProps) => {
+export default function DanmakuSwitch({
+  enabled,
+  onToggle,
+}: DanmakuSwitchProps) {
   return (
-    <>
-      <button
-        className="PlayerIconButton-playerButton-zDmEsI IconButton-button-s4bVCh danmaku-button"
-        type="button"
-        role="button"
-        onClick={onClick}
-      >
-        <BiliSwitchSVG on={on} />
-      </button>
-    </>
+    <button
+      className="PlayerIconButton-playerButton-zDmEsI IconButton-button-s4bVCh danmaku-button"
+      type="button"
+      aria-label="弹幕开关"
+      aria-pressed={enabled}
+      onClick={onToggle}
+    >
+      <DanmakuToggleIcon on={enabled} />
+    </button>
   );
-};
-
-export default DMSwitch;
+}

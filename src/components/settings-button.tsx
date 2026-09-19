@@ -1,4 +1,4 @@
-const BiliSettingSVG = () => {
+const SettingsIcon = () => {
   const className = "rkbrtb0 rkbrtb1 rkbrtb3 rkbrtba";
   return (
     <svg
@@ -18,26 +18,28 @@ const BiliSettingSVG = () => {
   );
 };
 
-const DMSetting = ({
-  on,
-  ...rest
-}: {
-  on: boolean;
+interface SettingsButtonProps {
+  enabled: boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
-}) => {
-  let className =
-    "PlayerIconButton-playerButton-zDmEsI IconButton-button-s4bVCh danmaku-button";
-  if (!on) {
-    className += " danmaku-setting-disable";
-  }
-  return (
-    <>
-      <button {...rest} className={className} type="button" role="button">
-        <BiliSettingSVG />
-      </button>
-    </>
-  );
-};
+}
 
-export default DMSetting;
+export default function SettingsButton({
+  enabled,
+  ...mouseHandlers
+}: SettingsButtonProps) {
+  const className =
+    "PlayerIconButton-playerButton-zDmEsI IconButton-button-s4bVCh danmaku-button" +
+    (enabled ? "" : " danmaku-setting-disable");
+  return (
+    <button
+      {...mouseHandlers}
+      className={className}
+      type="button"
+      aria-label="弹幕设置"
+      disabled={!enabled}
+    >
+      <SettingsIcon />
+    </button>
+  );
+}

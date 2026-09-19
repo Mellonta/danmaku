@@ -1,67 +1,41 @@
-import React, { useEffect, useState } from "react";
-import { plexTitleToDDP } from "./utils";
-import {
-  fetchComments,
-  fetchEpisodeId,
-  type DDPComment,
-  DDPChConvert,
-} from "./dandanplay";
-import Observer from "./components/observer";
-import DMMenu from "./components/menu";
-import DM from "./components/danmu";
+import { useState } from "react";
+import { ChineseConversion } from "./dandanplay";
+import { useComments } from "./hooks/use-comments";
+import { usePlexPlayer } from "./hooks/use-plex-player";
+import DanmakuMenu from "./components/danmaku-menu";
+import DanmakuOverlay from "./components/danmaku-overlay";
 
-const App = () => {
-  const [_title, _setTitle] = useState<string | null>();
-  const [_episodeId, _setEpisodeId] = useState<number | null>();
-
-  const [_switchOn, _setSwitchOn] = useState<boolean>(true);
-  const [_minimized, _setMinimized] = useState<boolean>(true);
-
-  const [_comments, _setComments] = useState<DDPComment[]>([]);
-  const [_fontSize, _setFontSize] = useState<number>(25);
-  const [_opacity, _setOpacity] = useState<number>(90);
-  const [_ch, _setCh] = useState<DDPChConvert>(DDPChConvert.None);
-
-  useEffect(() => {
-    _setComments([]);
-    if (_episodeId) {
-      void fetchComments(_episodeId, _ch).then(_setComments);
-    }
-  }, [_episodeId, _ch]);
-
-  useEffect(() => {
-    _setComments([]);
-    if (_title) {
-      const [searchTitle, searchEpisode] = plexTitleToDDP(_title);
-      void fetchEpisodeId(searchTitle, searchEpisode).then(_setEpisodeId);
-    }
-  }, [_title]);
+export default function App() {
+  const player = usePlexPlayer();
+  const [enabled, setEnabled] = useState(true);
+  const [fontSize, setFontSize] = useState(25);
+  const [opacity, setOpacity] = useState(90);
+  const [conversion, setConversion] = useState(ChineseConversion.None);
+  const comments = useComments(player.title, conversion);
 
   return (
     <>
-      <DMMenu
-        minimized={_minimized}
-        on={_switchOn}
-        onSwitch={() => {
-          _setSwitchOn((prev) => !prev);
+      <DanmakuMenu
+        container={player.controls}
+        enabled={enabled}
+        onToggle={() => {
+          setEnabled((previous) => !previous);
         }}
-        fontSize={_fontSize}
-        setFontSize={_setFontSize}
-        opacity={_opacity}
-        setOpacity={_setOpacity}
-        ch={_ch}
-        setCh={_setCh}
+        fontSize={fontSize}
+        onFontSizeChange={setFontSize}
+        opacity={opacity}
+        onOpacityChange={setOpacity}
+        conversion={conversion}
+        onConversionChange={setConversion}
       />
-      <Observer setMinimized={_setMinimized} setTitle={_setTitle} />
-      <DM
-        switchOn={_switchOn}
-        minimized={_minimized}
-        comments={_comments}
-        fontSize={_fontSize}
-        opacity={_opacity}
+      <DanmakuOverlay
+        container={player.container}
+        media={player.media}
+        enabled={enabled && !player.minimized}
+        comments={comments}
+        fontSize={fontSize}
+        opacity={opacity}
       />
     </>
   );
-};
-
-export default App;
+}

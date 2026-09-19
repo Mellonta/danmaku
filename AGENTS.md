@@ -9,8 +9,9 @@ TypeScript, and Bun. The installable artifact is `dist/danmu.user.js`.
 ## Local workflow
 
 - Install the locked dependencies with `bun install --frozen-lockfile`.
-- Type-check with `bunx tsc --noEmit`.
-- Check lint without modifying files with `bunx eslint src`.
+- Type-check application and tests with `bun run typecheck`.
+- Check lint without modifying files with `bun run lint:check`.
+- Run the regression suite with `bun test` (Bun with Happy DOM).
 - `bun run lint` applies ESLint fixes; `bun run prettier` formats source files.
 - For a build check without credentials or changes to `dist`, run
   `bun build ./src/index.tsx --minify --outfile /tmp/danmu-check.js`.
@@ -33,6 +34,13 @@ screen, or GitHub Actions release pipeline without a user request.
 
 ## Architecture and conventions
 
+- `app.tsx` composes settings, `usePlexPlayer`, and `useComments`.
+- `plex.ts` owns DOM selectors and observation; `title.ts` parses episode titles.
+- `dandanplay.ts` owns signed, cancellable API requests and response validation;
+  `signature.ts` implements the signing algorithm.
+- `comments.ts` converts API comments to the renderer's public comment type.
+- `components/` contains the menu, settings, buttons, and overlay. Each effect
+  owns the DOM nodes, observers, or timers it creates and removes them on cleanup.
 - Keep Plex DOM integration, API requests, comment conversion, and UI concerns
   separate. Centralize Plex selectors; hashed class names can change upstream.
 - Dandanplay requests use `GM_xmlhttpRequest` for cross-origin access, with

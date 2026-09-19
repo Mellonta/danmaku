@@ -7,7 +7,7 @@ export default defineConfig(
     ignores: ["dist/**", "node_modules/**"],
   },
   {
-    files: ["src/**/*.{ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"],
     extends: [
       js.configs.recommended,
       tseslint.configs["flat/strict-type-checked"],
@@ -25,13 +25,10 @@ export default defineConfig(
         "error",
         { ignoreIIFE: true },
       ],
-      // Preserve the existing interpolation and loop rules during this upgrade.
       "@typescript-eslint/restrict-template-expressions": [
         "error",
-        { allowNumber: true, allowNullish: true },
+        { allowNumber: true },
       ],
-      "@typescript-eslint/prefer-regexp-exec": "off",
-      "no-constant-condition": ["error", { checkLoops: "all" }],
     },
   },
 );
