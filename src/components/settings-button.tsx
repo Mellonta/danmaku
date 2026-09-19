@@ -1,3 +1,5 @@
+import type { ComponentPropsWithRef } from "react";
+
 const SettingsIcon = () => {
   const className = "rkbrtb0 rkbrtb1 rkbrtb3 rkbrtba";
   return (
@@ -18,26 +20,14 @@ const SettingsIcon = () => {
   );
 };
 
-interface SettingsButtonProps {
-  enabled: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-}
-
-export default function SettingsButton({
-  enabled,
-  ...mouseHandlers
-}: SettingsButtonProps) {
-  const className =
-    "PlayerIconButton-playerButton-zDmEsI IconButton-button-s4bVCh danmaku-button" +
-    (enabled ? "" : " danmaku-setting-disable");
+export default function SettingsButton(props: ComponentPropsWithRef<"button">) {
   return (
     <button
-      {...mouseHandlers}
-      className={className}
+      {...props}
+      className="PlayerIconButton-playerButton-zDmEsI IconButton-button-s4bVCh danmaku-button"
       type="button"
       aria-label="弹幕设置"
-      disabled={!enabled}
+      title="弹幕设置"
     >
       <SettingsIcon />
     </button>

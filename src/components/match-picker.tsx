@@ -8,6 +8,7 @@ import {
   Space,
   theme,
 } from "antd";
+import { getPopupContainer, POPUP_Z_INDEX } from "./popup";
 import type { CommentMatch } from "../hooks/use-comments";
 
 export function matchLabel(match: CommentMatch): string {
@@ -64,6 +65,7 @@ function SearchForm({ match }: { match: CommentMatch }) {
       <Space style={{ marginTop: 12 }} wrap>
         <Select
           aria-label="Search engine"
+          getPopupContainer={getPopupContainer}
           value={v2 ? "new" : "legacy"}
           onChange={(value) => {
             setV2(value === "new");
@@ -84,44 +86,33 @@ function SearchForm({ match }: { match: CommentMatch }) {
     </form>
   );
 }
-export default function MatchPicker({ match }: { match: CommentMatch }) {
-  const [open, setOpen] = useState(false);
+interface MatchPickerProps {
+  match: CommentMatch;
+  open: boolean;
+  onClose: () => void;
+}
+
+export default function MatchPicker({
+  match,
+  open,
+  onClose,
+}: MatchPickerProps) {
   return (
-    <ConfigProvider theme={{ algorithm: theme.darkAlgorithm }}>
-      <button
-        type="button"
-        aria-label={`Danmaku match: ${matchLabel(match)}`}
-        disabled={!match.title}
-        onClick={() => {
-          setOpen(true);
-        }}
-        style={{
-          fontSize: 12,
-          lineHeight: "18px",
-          color: "#eee",
-          background: "transparent",
-          border: 0,
-          padding: "6px 10px",
-          cursor: "pointer",
-          maxWidth: 150,
-        }}
-      >
-        {matchLabel(match)}
-      </button>
+    <ConfigProvider
+      theme={{
+        algorithm: theme.darkAlgorithm,
+        token: { zIndexPopupBase: POPUP_Z_INDEX },
+      }}
+    >
       <Modal
         title="弹弹play · Match episode"
         open={open}
-        onCancel={() => {
-          setOpen(false);
-        }}
+        onCancel={onClose}
+        zIndex={POPUP_Z_INDEX}
         footer={null}
         width={520}
         destroyOnHidden
-        getContainer={() =>
-          document.fullscreenElement instanceof HTMLElement
-            ? document.fullscreenElement
-            : document.body
-        }
+        getContainer={getPopupContainer}
         modalRender={(content) => <div data-danmaku-root="">{content}</div>}
       >
         <p style={{ overflowWrap: "anywhere" }}>Plex: {match.title}</p>

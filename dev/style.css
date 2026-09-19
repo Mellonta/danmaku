@@ -261,13 +261,6 @@ video {
   padding: 6px;
   line-height: 0;
 }
-/* The production menu has Plex-specific offsets; keep the fixture menu inside its player. */
-#danmaku-extended-menu [style*="620px"] {
-  left: auto !important;
-  right: 12px;
-  bottom: 58px !important;
-  max-width: calc(100% - 24px);
-}
 #plex.minimized .Player-fullPlayerContainer-local {
   aspect-ratio: auto;
   height: 110px;
@@ -468,10 +461,6 @@ body[data-mode="offline"] #lookup-mode {
   .player-buttons select {
     padding: 6px;
   }
-  #danmaku-extended-menu svg {
-    width: 36px;
-    height: 36px;
-  }
 }
 
 @media (max-width: 1000px) {
@@ -502,4 +491,11 @@ body[data-mode="offline"] #lookup-mode {
   body {
     padding: 18px;
   }
+}
+
+/* Plex supplies these icon dimensions in production. */
+#danmaku-extended-menu svg {
+  display: block;
+  width: 24px;
+  height: 24px;
 }

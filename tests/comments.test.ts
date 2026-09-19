@@ -21,6 +21,7 @@ describe("comment conversion", () => {
         mode: "rtl",
         style: {
           fontSize: "25px",
+          font: "25px sans-serif",
           opacity: "0.9",
           color: "#000000",
           textShadow:

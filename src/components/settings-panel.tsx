@@ -12,15 +12,6 @@ const railStyle: CSSProperties = {
   backgroundColor: "hsla(0,0%,100%,.2)",
 };
 
-const modalStyle: CSSProperties = {
-  position: "absolute",
-  left: "620px",
-  bottom: "80px",
-  width: "280px",
-  zIndex: 1001,
-  backgroundColor: "hsla(0,0%,8%,.9)",
-};
-
 export interface SettingsProps {
   fontSize: number;
   onFontSizeChange: (value: number) => void;
@@ -30,12 +21,6 @@ export interface SettingsProps {
   onConversionChange: (value: ChineseConversion) => void;
 }
 
-interface SettingsPanelProps extends SettingsProps {
-  visible: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-}
-
 export default function SettingsPanel({
   fontSize,
   onFontSizeChange,
@@ -43,9 +28,7 @@ export default function SettingsPanel({
   onOpacityChange,
   conversion,
   onConversionChange,
-  visible,
-  ...rest
-}: SettingsPanelProps) {
+}: SettingsProps) {
   const [draftFontSize, setDraftFontSize] = useState(fontSize);
   const [draftOpacity, setDraftOpacity] = useState(opacity);
 
@@ -60,13 +43,8 @@ export default function SettingsPanel({
     }
   };
 
-  const style: CSSProperties = {
-    ...modalStyle,
-    display: visible ? "block" : "none",
-  };
-
   return (
-    <div style={style} {...rest}>
+    <div>
       <Row
         style={{ width: "100%", height: "35px" }}
         align="middle"

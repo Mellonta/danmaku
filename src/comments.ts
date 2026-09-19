@@ -44,6 +44,8 @@ export function generateComments(
         time,
         style: {
           fontSize: `${fontSize}px`,
+          // Preserve the original font reset instead of inheriting Plex typography.
+          font: `${fontSize}px sans-serif`,
           opacity: String(opacity / 100),
           color: `#${color}`,
           textShadow: `-1px -1px ${outline}, -1px 1px ${outline}, 1px -1px ${outline}, 1px 1px ${outline}`,

@@ -32,8 +32,8 @@
 
 ### Matching an episode
 
-The player controls show matching status beside the danmaku settings icon.
-Click it to open **弹弹play · Match episode**:
+Click the danmaku gear icon to see matching status and settings.
+Choose **Search / match episode** to open **弹弹play · Match episode**:
 
 - A single complete search result loads automatically. Multiple results (or
   a truncated result set) show **Choose match** and wait for your selection.
@@ -82,8 +82,8 @@ credentials from your existing `key.sh`. No Plex server, downloaded video, or
 userscript manager is needed.
 
 Enter the Plex browser title and click **Load title**. Use the same danmaku
-switch, settings icon, and match status in the playback bar as in production.
-Click the status to correct a title, search, choose an episode, or reset a saved
+switch and settings icon in the playback bar as in production.
+Open the gear menu and choose **Search / match episode** to correct a title, search, choose an episode, or reset a saved
 match. All of these are the actual production components, with no separate
 harness search override. Press Play or seek along the one-hour simulated timeline
 to see comments at their recorded timestamps.
@@ -121,8 +121,7 @@ source, run `build.sh`, or regenerate `dist/`. Live requests run on page load an
 
 Edit `dev/fixtures.ts` for sample API data, `dev/media.ts` for the synthetic
 timeline, and `dev/index.html` / `dev/style.css` for the surrounding player.
-The harness adapts the settings panel's Plex-specific position to its own
-viewport. Live mode verifies title parsing and API matching, but it cannot verify
+The same gear popup anchors to its button in both Plex and the harness. Live mode verifies title parsing and API matching, but it cannot verify
 the DOM of your installed Plex version, video decoding/buffering, or userscript
 manager permissions; do a final smoke test in Plex before releasing.
 

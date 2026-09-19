@@ -26,7 +26,7 @@ export function describeSearch(data: unknown): {
       message: single
         ? `One candidate: ${candidates[0] ?? ""}`
         : candidates.length
-          ? "Multiple candidates: use Choose match in the player controls."
+          ? "Multiple candidates: open the gear menu → Search / match episode."
           : "No matching episode. Try an alternate name or episode query.",
     };
   } catch (error) {
