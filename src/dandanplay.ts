@@ -39,6 +39,7 @@ function DDPSearchEpisodes(title: string, episode: string) {
     "/api/v2/search/episodes",
     AppSecret,
   );
+  console.log("[Danmaku] title:", title, "episode:", episode);
   return new Promise<DDPSearchEpisodesResponse>((resolve, reject) => {
     GM_xmlhttpRequest({
       url: `https://api.dandanplay.net/api/v2/search/episodes?anime=${title}&episode=${episode}`,
