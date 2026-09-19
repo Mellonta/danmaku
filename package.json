@@ -23,10 +23,11 @@
     "react-dom": "^19.3.0"
   },
   "scripts": {
-    "prettier": "prettier --write src",
-    "lint": "eslint src tests --fix",
-    "lint:check": "eslint src tests --max-warnings 0",
-    "typecheck": "tsc --noEmit && tsc --project tests/tsconfig.json --noEmit",
+    "dev": "bun --watch dev/server.ts",
+    "prettier": "prettier --write src dev scripts tests",
+    "lint": "eslint src tests dev scripts --fix",
+    "lint:check": "eslint src tests dev scripts --max-warnings 0",
+    "typecheck": "tsc --noEmit && tsc --project tests/tsconfig.json --noEmit && tsc --project dev/tsconfig.json --noEmit && tsc --project scripts/tsconfig.json --noEmit",
     "test": "bun test"
   }
 }

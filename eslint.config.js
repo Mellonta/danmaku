@@ -7,7 +7,12 @@ export default defineConfig(
     ignores: ["dist/**", "node_modules/**"],
   },
   {
-    files: ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"],
+    files: [
+      "src/**/*.{ts,tsx}",
+      "tests/**/*.{ts,tsx}",
+      "dev/**/*.{ts,tsx}",
+      "scripts/**/*.ts",
+    ],
     extends: [
       js.configs.recommended,
       tseslint.configs["flat/strict-type-checked"],

@@ -4,8 +4,11 @@ import { OWNED_ELEMENT_ATTRIBUTE } from "../plex";
 import DanmakuSwitch from "./danmaku-switch";
 import SettingsButton from "./settings-button";
 import SettingsPanel, { type SettingsProps } from "./settings-panel";
+import MatchPicker from "./match-picker";
+import type { CommentMatch } from "../hooks/use-comments";
 
 interface ControlsProps extends SettingsProps {
+  match: CommentMatch;
   enabled: boolean;
   onToggle: () => void;
 }
@@ -14,7 +17,7 @@ interface DanmakuMenuProps extends ControlsProps {
   container: HTMLElement | null;
 }
 
-function Controls({ enabled, onToggle, ...settings }: ControlsProps) {
+function Controls({ enabled, onToggle, match, ...settings }: ControlsProps) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const hideTimer = useRef<number | null>(null);
 
@@ -50,6 +53,7 @@ function Controls({ enabled, onToggle, ...settings }: ControlsProps) {
       />
       <DanmakuSwitch enabled={enabled} onToggle={onToggle} />
       <SettingsButton enabled={enabled} {...mouseHandlers} />
+      <MatchPicker match={match} />
     </>
   );
 }

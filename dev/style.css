@@ -1,0 +1,505 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  color: #e4e8ed;
+  background: #111418;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 36px 40px 22px;
+}
+header,
+.section-heading,
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+header {
+  margin-bottom: 24px;
+}
+h1 {
+  font-size: 25px;
+  letter-spacing: -0.8px;
+  margin: 9px 0 0;
+  font-weight: 650;
+}
+h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #92a0ae;
+  font-weight: 650;
+}
+.badge {
+  font-size: 11px;
+  padding: 9px 12px;
+  border: 1px solid #333c40;
+  border-radius: 24px;
+  color: #bbc9c5;
+}
+.badge i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #a4dca5;
+  margin-right: 7px;
+}
+main {
+  display: block;
+}
+.preview {
+  min-width: 0;
+}
+.section-heading {
+  height: 38px;
+  margin-bottom: 10px;
+}
+#dimensions,
+.hint,
+footer {
+  color: #89939f;
+  font-size: 12px;
+  line-height: 1.65;
+}
+.hint {
+  margin: 12px 0 20px;
+}
+button,
+select {
+  border: 1px solid #3a424c;
+  background: #242b33;
+  color: #e4e8ed;
+  font: inherit;
+  font-size: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+}
+button {
+  cursor: pointer;
+  white-space: nowrap;
+}
+button:hover {
+  background: #343e48;
+  border-color: #8593a1;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid #e9b553;
+  outline-offset: 3px;
+}
+.primary {
+  background: #e9b553;
+  color: #151719;
+  border-color: #e9b553;
+  min-width: 66px;
+  font-weight: 650;
+}
+.primary:hover {
+  background: #ffd17a;
+}
+.quiet {
+  border: 0;
+  background: none;
+  color: #9da8b4;
+}
+.wide,
+aside select {
+  width: 100%;
+}
+.row select {
+  flex: 1;
+  min-width: 0;
+}
+.card {
+  background: #1a1f25;
+  border: 1px solid #2b333c;
+  border-radius: 10px;
+  padding: 19px;
+  margin-bottom: 14px;
+}
+.card h2 {
+  margin: 9px 0 22px;
+}
+label {
+  display: block;
+  font-size: 12px;
+  color: #bac3cd;
+}
+.card label {
+  margin: 18px 0 9px;
+}
+.card label output {
+  float: right;
+  color: #e9b553;
+}
+input[type="range"] {
+  accent-color: #e9b553;
+  width: 100%;
+  cursor: pointer;
+  margin: 8px 0 18px;
+}
+.button-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 10px 0;
+}
+.card .hint {
+  margin-bottom: 0;
+  font-size: 11px;
+}
+#plex {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #080d15;
+  border: 1px solid #354354;
+  position: relative;
+}
+.Player-fullPlayerContainer-local {
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+}
+video {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at 60% 25%,
+    #3c556b 0%,
+    #1a283a 40%,
+    #0e1725 80%
+  );
+}
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0.4;
+  background-image: radial-gradient(#e0e9ef 1px, transparent 1px);
+  background-size: 63px 71px;
+}
+.planet {
+  position: absolute;
+  width: 26%;
+  aspect-ratio: 1;
+  left: 48%;
+  top: 21%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 24%,
+    #fce7b2,
+    #dba478 48%,
+    #6b5360 80%
+  );
+  box-shadow: 0 0 90px #dfab7030;
+}
+.ridge {
+  position: absolute;
+  width: 140%;
+  height: 50%;
+  left: -20%;
+  bottom: -25%;
+  border-radius: 50%;
+  background: #101b2c;
+  transform: rotate(-10deg);
+  box-shadow: 0 -1px 0 #69869b55;
+}
+.scene-label {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #90a4b9;
+}
+.episode-label {
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  font-size: 12px;
+  color: #bbc9d9;
+}
+.PlayerControls-buttonGroupCenter-local {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  justify-content: flex-end;
+}
+.PlayerControls-buttonGroupCenter-local button {
+  background: transparent;
+  border: 0;
+  fill: #e4e8ed;
+  padding: 6px;
+  line-height: 0;
+}
+/* The production menu has Plex-specific offsets; keep the fixture menu inside its player. */
+#danmaku-extended-menu [style*="620px"] {
+  left: auto !important;
+  right: 12px;
+  bottom: 58px !important;
+  max-width: calc(100% - 24px);
+}
+#plex.minimized .Player-fullPlayerContainer-local {
+  aspect-ratio: auto;
+  height: 110px;
+}
+.closed {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  color: #89939f;
+  font-size: 13px;
+}
+.transport {
+  display: block;
+  margin: 0;
+  padding: 10px 16px;
+  background: #17191d;
+  border-top: 1px solid #30343b;
+}
+.transport .timeline {
+  width: 100%;
+}
+.transport input {
+  margin: 0;
+}
+.transport output {
+  font-size: 11px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: #bbc5d0;
+}
+.requests {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid #2c3540;
+  max-height: 300px;
+  overflow: auto;
+}
+.requests:empty::after {
+  content: "Requests will appear here.";
+  display: block;
+  padding: 20px 0;
+  color: #89939f;
+  font-size: 12px;
+}
+.requests li {
+  display: grid;
+  grid-template-columns: 80px minmax(0, 1fr);
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #2c3540;
+  font-size: 11px;
+}
+.requests code {
+  overflow-wrap: anywhere;
+  color: #aab7c5;
+}
+.request-status {
+  color: #e9b553;
+}
+dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  font-size: 12px;
+  gap: 12px;
+}
+dt {
+  color: #89939f;
+}
+dd {
+  margin: 0;
+}
+footer {
+  border-top: 1px solid #2c3540;
+  margin-top: 24px;
+  padding-top: 18px;
+  font-size: 11px;
+}
+#error {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  padding: 20px;
+  background: #512a2a;
+  color: #ffdada;
+  z-index: 9999;
+  white-space: pre-wrap;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.title-lab input[type="text"] {
+  width: 100%;
+  padding: 11px;
+  background: #111820;
+  border: 1px solid #3a424c;
+  color: #e4e8ed;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 13px;
+}
+.title-lab pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #111820;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  max-height: 300px;
+  overflow: auto;
+}
+.title-lab details {
+  margin-top: 16px;
+}
+.title-lab summary {
+  cursor: pointer;
+  font-size: 13px;
+  color: #e9b553;
+}
+.title-lab form button {
+  margin-top: 12px;
+}
+.title-lab code,
+#candidates {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+#candidates {
+  padding-left: 18px;
+  max-height: 240px;
+  overflow: auto;
+  line-height: 1.8;
+}
+#lookup-status,
+#comment-status {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+#title-form {
+  margin-bottom: 20px;
+}
+#title-form label {
+  margin-bottom: 8px;
+}
+#title-form .row {
+  flex-wrap: nowrap;
+}
+#title-form input {
+  min-width: 0;
+  flex: 1;
+}
+#title-form button {
+  margin: 0;
+}
+
+.player-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 60px;
+}
+.player-buttons > button {
+  background: transparent;
+  border: 0;
+  font-size: 22px;
+  padding: 8px;
+}
+
+#developer-tools {
+  margin-top: 24px;
+}
+#developer-tools > summary {
+  padding: 12px 0;
+}
+body[data-mode="offline"] #lookup-mode {
+  color: #ffd17a;
+  border-color: #e9b553;
+}
+@media (max-width: 650px) {
+  .player-buttons {
+    flex-wrap: wrap;
+    gap: 2px;
+  }
+  .player-buttons output {
+    margin-right: auto;
+  }
+  .PlayerControls-buttonGroupCenter-local {
+    flex: 0 0 auto;
+  }
+  .player-buttons select {
+    padding: 6px;
+  }
+  #danmaku-extended-menu svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 1000px) {
+  body {
+    padding: 24px;
+  }
+  aside {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .row {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 650px) {
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+  aside {
+    display: block;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  body {
+    padding: 18px;
+  }
+}

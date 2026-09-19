@@ -11,12 +11,13 @@ export default function App() {
   const [fontSize, setFontSize] = useState(25);
   const [opacity, setOpacity] = useState(90);
   const [conversion, setConversion] = useState(ChineseConversion.None);
-  const comments = useComments(player.title, conversion);
+  const match = useComments(player.title, conversion);
 
   return (
     <>
       <DanmakuMenu
         container={player.controls}
+        match={match}
         enabled={enabled}
         onToggle={() => {
           setEnabled((previous) => !previous);
@@ -32,7 +33,7 @@ export default function App() {
         container={player.container}
         media={player.media}
         enabled={enabled && !player.minimized}
-        comments={comments}
+        comments={match.comments}
         fontSize={fontSize}
         opacity={opacity}
       />

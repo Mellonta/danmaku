@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>葬送的芙莉莲 - S1 · E1</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <header data-danmaku-root>
+      <h1>Danmaku player</h1>
+      <span class="badge" id="lookup-mode">LIVE · Dandanplay</span>
+    </header>
+    <main>
+      <section class="preview">
+        <form id="title-form" class="title-lab" data-danmaku-root>
+          <label for="plex-title">Plex title</label>
+          <div class="row">
+            <input
+              id="plex-title"
+              type="text"
+              value="葬送的芙莉莲 - S1 · E1"
+              required
+            />
+            <button class="primary" type="submit">Load title</button>
+          </div>
+        </form>
+        <div id="plex" class="show-video-player"></div>
+        <div id="transport" class="transport" data-danmaku-root>
+          <label class="timeline"
+            ><span class="sr-only">Playback position</span>
+            <input
+              id="seek"
+              type="range"
+              min="0"
+              max="3600"
+              step="0.1"
+              value="0"
+            />
+          </label>
+          <div class="player-buttons">
+            <button id="play" aria-label="Play" title="Play">▶</button>
+            <button id="restart" aria-label="Restart" title="Restart">↺</button>
+            <output id="time">0:00 / 60:00</output>
+            <div class="PlayerControls-buttonGroupCenter-local"></div>
+            <label
+              ><span class="sr-only">Playback speed</span>
+              <select id="speed">
+                <option value="0.5">0.5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <p class="hint" data-danmaku-root>
+          Use the danmaku switch, settings icon, and match status in the player
+          bar, just as in Plex. Searches use real Dandanplay data. Only the
+          video is simulated.
+        </p>
+        <details id="developer-tools" class="title-lab" data-danmaku-root>
+          <summary>Developer tools</summary>
+          <section class="card">
+            <h2>Search diagnostics</h2>
+            <pre id="parsed-query"></pre>
+            <p id="lookup-status" role="status"></p>
+            <code id="actual-query"></code>
+            <ul id="candidates"></ul>
+            <p id="comment-status" role="status"></p>
+            <details>
+              <summary>Raw search response</summary>
+              <pre id="api-response"></pre>
+            </details>
+            <details>
+              <summary>Compare search engines</summary>
+              <p class="hint">
+                Runs the entered title against both live search engines without
+                changing the player's match.
+              </p>
+              <button id="compare-engines" type="button">
+                Compare original and v2
+              </button>
+              <pre id="legacy-result">Original: not run</pre>
+              <pre id="v2-result">v2: not run</pre>
+            </details>
+          </section>
+          <section class="card">
+            <h2>Offline fixtures</h2>
+            <p class="hint">
+              Fake responses for error testing. Search text is ignored in this
+              mode. Load a title above to return to live Dandanplay.
+            </p>
+            <button id="use-fixtures" type="button">
+              Use offline fixtures
+            </button>
+          </section>
+          <aside>
+            <section class="card">
+              <span class="eyebrow">01 / FIXTURES</span>
+              <h2>Change the scene</h2>
+              <label for="episode">Episode</label>
+              <div class="row">
+                <select id="episode">
+                  <option value="1">Local Orbit · S1 E1</option>
+                  <option value="2">Local Orbit · S1 E2</option>
+                  <option value="3">Local Orbit · S1 E3</option></select
+                ><button id="next" aria-label="Next episode">Next →</button>
+              </div>
+              <label for="scenario">API response</label>
+              <select id="scenario">
+                <option value="normal">Successful comments</option>
+                <option value="ambiguous">Multiple matching series</option>
+                <option value="no-match">No matching episode</option>
+                <option value="empty">Empty comment list</option>
+                <option value="http-error">HTTP 503</option>
+                <option value="network-error">Network failure</option>
+                <option value="timeout">Request timeout</option>
+                <option value="invalid">Malformed comments</option>
+              </select>
+              <label for="latency"
+                >Response delay
+                <output id="latency-value">180 ms</output></label
+              >
+              <input
+                id="latency"
+                type="range"
+                min="0"
+                max="3000"
+                step="20"
+                value="180"
+              />
+              <button id="reload" class="wide">Reload current episode</button>
+              <p class="hint">
+                Scenario changes reload automatically. Raise the delay and
+                switch episodes quickly to test cancellation. Timeouts fire
+                after the selected delay.
+              </p>
+            </section>
+            <section class="card">
+              <span class="eyebrow">02 / PLAYER LIFECYCLE</span>
+              <h2>Try the edge cases</h2>
+              <label for="size">Player width</label>
+              <select id="size">
+                <option value="100%">Fit available space</option>
+                <option value="700px">700 px</option>
+                <option value="480px">480 px</option>
+              </select>
+              <div class="button-grid">
+                <button id="minimize">Minimize</button
+                ><button id="close">Close player</button>
+              </div>
+              <button id="replace" class="wide">Replace player DOM</button>
+              <p class="hint">
+                Reopen the same episode to check that comments return. Replace
+                the DOM to check cleanup and reattachment.
+              </p>
+            </section>
+            <section class="card diagnostics">
+              <span class="eyebrow">03 / DIAGNOSTICS</span>
+              <h2>Live state</h2>
+              <dl>
+                <dt>Overlay / menu</dt>
+                <dd id="mounts">0 / 0</dd>
+                <dt>Playback</dt>
+                <dd id="playback">Paused</dd>
+                <dt>Source reload</dt>
+                <dd id="connection">Connecting…</dd>
+              </dl>
+              <p class="hint">
+                Full page reload on edits to <code>src/</code> or
+                <code>dev/</code>. Expected fixture errors also appear in the
+                browser console.
+              </p>
+            </section>
+          </aside>
+
+          <div class="section-heading">
+            <h2>Request activity</h2>
+            <button id="clear-log" class="quiet">Clear</button>
+          </div>
+          <ol id="requests" class="requests" aria-label="Request activity"></ol>
+          <span id="dimensions"></span>
+        </details>
+      </section>
+    </main>
+    <footer data-danmaku-root>
+      Same userscript controls and matching code as Plex. Simulated video; no
+      downloads needed.
+    </footer>
+    <pre id="error" role="alert" data-danmaku-root hidden></pre>
+    <script>
+      // Keep reload working even when the application fails to compile or mount.
+      let revision;
+      let polling = false;
+      const errorPanel = document.getElementById("error");
+      window.addEventListener("error", (event) => {
+        errorPanel.hidden = false;
+        errorPanel.textContent = event.message;
+      });
+      setInterval(async () => {
+        if (polling) return;
+        polling = true;
+        try {
+          const response = await fetch("/version");
+          if (!response.ok) throw new Error("Server unavailable");
+          const next = await response.json();
+          if (revision !== undefined && next !== revision) location.reload();
+          revision = next;
+          document.getElementById("connection").textContent = "Watching";
+        } catch {
+          document.getElementById("connection").textContent = "Reconnecting…";
+        } finally {
+          polling = false;
+        }
+      }, 1000);
+    </script>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

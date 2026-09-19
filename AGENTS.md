@@ -9,10 +9,17 @@ TypeScript, and Bun. The installable artifact is `dist/danmu.user.js`.
 ## Local workflow
 
 - Install the locked dependencies with `bun install --frozen-lockfile`.
+- Run `bun run dev` for the local player harness at http://127.0.0.1:5173.
+  It uses the real userscript entry and a synthetic media clock. Offline fixtures
+  need no keys; live mode is the default and uses the existing key.sh through a
+  loopback-only Dandanplay proxy. Neither mode needs Plex or downloaded video.
+  Use the production controls in the player bar; fixtures and diagnostics are
+  under Developer tools. Source edits reload into live mode. Keep harness-only
+  behavior in `dev/`, outside release entry points.
 - Type-check application and tests with `bun run typecheck`.
 - Check lint without modifying files with `bun run lint:check`.
 - Run the regression suite with `bun test` (Bun with Happy DOM).
-- `bun run lint` applies ESLint fixes; `bun run prettier` formats source files.
+- `bun run lint` applies ESLint fixes; `bun run prettier` formats source and harness files.
 - For a build check without credentials or changes to `dist`, run
   `bun build ./src/index.tsx --minify --outfile /tmp/danmu-check.js`.
 - Build the installable userscript locally with `bash -e build.sh`.
@@ -22,11 +29,10 @@ change it. `key.sh` is ignored by Git. Its `APP_ID` and `APP_SECRET` values are
 JavaScript declarations used to replace the exact `AppId` and `AppSecret`
 placeholder declarations in `src/dandanplay.ts`; preserve that contract.
 
-The current build deletes `dist`, backs up `src/dandanplay.ts` to the repository
-root, injects credentials, bundles, prepends `src/meta.ts`, and restores the source.
-Calling it with `bash -e` avoids the shebang's credential-printing `-x` option.
-If it fails, restore the source from the build's backup, preserving any existing
-local edits. Do not discard working changes with a Git reset or checkout.
+The build sources key.sh without tracing, then runs scripts/build.ts. It injects
+credential declarations in memory and atomically replaces dist/danmu.user.js only
+after bundling succeeds. Source files are never rewritten. Do not log compiler
+diagnostics from the credential-injected build: they may quote declarations.
 
 Shared credentials are intentionally embedded in the distributed userscript.
 Do not commit `key.sh`, print its values, or introduce a server, credential setup
@@ -34,7 +40,14 @@ screen, or GitHub Actions release pipeline without a user request.
 
 ## Architecture and conventions
 
+- `dev/main.ts` wires the harness; `player.ts` owns its media/DOM lifecycle,
+  `request-log.ts` tracks requests by unique ID, and `title-lab.ts` owns diagnostics.
 - `app.tsx` composes settings, `usePlexPlayer`, and `useComments`.
+- `useComments` owns candidate search and corrections; `useEpisodeComments`
+  owns cancellable comment loading. Ambiguous or
+  truncated search results require selection. `match-storage.ts` persists only
+  explicit corrections by normalized title on the current origin; reset must
+  remove the correction. Conversion changes must not repeat the title search.
 - `plex.ts` owns DOM selectors and observation; `title.ts` parses episode titles.
 - `dandanplay.ts` owns signed, cancellable API requests and response validation;
   `signature.ts` implements the signing algorithm.

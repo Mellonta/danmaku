@@ -1,0 +1,7 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["bun", "react", "react-dom", "tampermonkey"]
+  },
+  "include": ["./**/*", "../src/**/*"]
+}

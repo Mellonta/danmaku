@@ -28,7 +28,10 @@ function isComment(value: unknown): value is DandanplayComment {
   return (
     isRecord(value) &&
     typeof value.cid === "number" &&
-    Number.isSafeInteger(value.cid) &&
+    // Dandanplay uses 64-bit comment IDs, which JSON can round in JavaScript.
+    // Rendering consumes p/m, so do not require cid to be a safe integer or
+    // use it as a unique key. Episode IDs below still require exact integers.
+    Number.isInteger(value.cid) &&
     typeof value.p === "string" &&
     typeof value.m === "string"
   );
@@ -115,37 +118,74 @@ function requestJson(
   });
 }
 
-export async function fetchEpisodeId(
-  query: EpisodeQuery,
-  signal?: AbortSignal,
-): Promise<number | null> {
-  const response = parseResponse(
-    await requestJson(
-      "/api/v2/search/episodes",
-      { anime: query.title, episode: query.episode },
-      signal,
-    ),
-  );
+export interface EpisodeCandidate {
+  episodeId: number;
+  animeTitle: string;
+  episodeTitle: string;
+}
+
+export interface EpisodeSearchResult {
+  candidates: EpisodeCandidate[];
+  hasMore: boolean;
+}
+
+export function parseEpisodeSearch(value: unknown): EpisodeSearchResult {
+  const response = parseResponse(value);
   const animes: unknown = response.animes;
   if (!Array.isArray(animes))
     throw new Error("Invalid Dandanplay search results");
-  const anime: unknown = animes[0];
-  if (anime === undefined) return null;
-  if (!isRecord(anime)) throw new Error("Invalid Dandanplay anime");
-  const episodes: unknown = anime.episodes;
-  if (episodes === undefined) return null;
-  if (!Array.isArray(episodes)) throw new Error("Invalid Dandanplay episodes");
-  const episode: unknown = episodes[0];
-  if (episode === undefined) return null;
-  if (
-    !isRecord(episode) ||
-    typeof episode.episodeId !== "number" ||
-    !Number.isSafeInteger(episode.episodeId) ||
-    episode.episodeId <= 0
-  ) {
-    throw new Error("Invalid Dandanplay episode ID");
+  const candidates = new Map<number, EpisodeCandidate>();
+  for (const item of animes) {
+    const anime: unknown = item;
+    if (!isRecord(anime)) throw new Error("Invalid Dandanplay anime");
+    const episodes: unknown = anime.episodes;
+    if (episodes === undefined) continue;
+    if (!Array.isArray(episodes))
+      throw new Error("Invalid Dandanplay episodes");
+    for (const item of episodes) {
+      const episode: unknown = item;
+      if (
+        !isRecord(episode) ||
+        typeof episode.episodeId !== "number" ||
+        !Number.isSafeInteger(episode.episodeId) ||
+        episode.episodeId <= 0
+      )
+        throw new Error("Invalid Dandanplay episode ID");
+      candidates.set(episode.episodeId, {
+        episodeId: episode.episodeId,
+        animeTitle:
+          typeof anime.animeTitle === "string"
+            ? anime.animeTitle
+            : "Unnamed series",
+        episodeTitle:
+          typeof episode.episodeTitle === "string"
+            ? episode.episodeTitle
+            : `Episode ${episode.episodeId}`,
+      });
+    }
   }
-  return episode.episodeId;
+  return {
+    candidates: [...candidates.values()],
+    hasMore: response.hasMore === true,
+  };
+}
+
+export async function searchEpisodes(
+  query: EpisodeQuery,
+  signal?: AbortSignal,
+  v2 = false,
+): Promise<EpisodeSearchResult> {
+  return parseEpisodeSearch(
+    await requestJson(
+      "/api/v2/search/episodes",
+      {
+        anime: query.title,
+        episode: query.episode,
+        v2: String(v2),
+      },
+      signal,
+    ),
+  );
 }
 
 export async function fetchComments(
